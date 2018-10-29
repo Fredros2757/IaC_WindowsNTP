@@ -45,12 +45,16 @@ class windowstime (
   Optional[Hash] $servers,
   Optional[String] $timezone = undef,
   Optional[Array] $timezones,
-  Optional[String] $logging,
+  Optional[Boolean] $logging = undef,
 ) {
 
   if $logging {
     exec {'c:/Windows/System32/w32tm.exe /debug /enable /file:C:\Windows\temp\w32tmdebug.log /size:10000000 /entries:0-300':}
   }	
+
+  if !$logging {
+    exec {'c:/Windows/System32/w32tm.exe /debug /disable':}
+  }
 
   $regvalue = maptoreg($servers)
   registry_value { 'HKLM\SYSTEM\CurrentControlSet\Services\W32Time\Parameters\Type':
