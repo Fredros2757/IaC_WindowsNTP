@@ -22,13 +22,32 @@
 # Examples
 # --------
 #
-# @example
+# Set custom timezone  
 #    class { 'windowstime':
 #      servers => { 'pool.ntp.org'     => '0x01',
 #                   'time.windows.com' => '0x01',
 #                 }
-#      logging => 'true',
-#      timezone => 'UTC',
+#      timezone => UTC,
+#    }
+#
+# Enable debugging with default values
+#    class { 'windowstime':
+#      servers => { 'pool.ntp.org'     => '0x01',
+#                   'time.windows.com' => '0x01',
+#                 }
+#      logging => true,
+#    }
+#
+# Enable debugging with custom values  
+#    class { 'windowstime':
+#      servers => { 'pool.ntp.org'     => '0x01',
+#                   'time.windows.com' => '0x01',
+#                 }
+#      logging => true,
+#      debugpath => C:\logs\mylog.log,
+#      debugsize => 100000,
+#      debugentryfirst => 5,
+#      debugentrylast => 290,
 #    }
 #
 # Authors
@@ -43,14 +62,22 @@
 #
 class windowstime (
   Optional[Hash] $servers,
-  Optional[String] $timezone = undef,
-  Optional[Array] $timezones,
+  Optional[String]  $timezone = undef,
+  Optional[Array]   $timezones,
   Optional[Boolean] $logging = undef,
+  Optional[String]  $debugpath,
+  Optional[Integer] $debugsize,
+  Optional[Integer] $debugentryfirst,
+  Optional[Integer] $debugentrylast,
 ) {
 
   if $logging {
-    exec {'c:/Windows/System32/w32tm.exe /debug /enable /file:C:\Windows\temp\w32tmdebug.log /size:10000000 /entries:0-300':}
-  }	
+    exec {"c:/Windows/System32/w32tm.exe /debug /enable /file:${debugpath} /size:${debugsize} /entries:${debugentryfirst}-${debugentrylast}":}
+  }
+
+# if $logging {
+#   exec {'c:/Windows/System32/w32tm.exe /debug /enable /file:C:\Windows\temp\w32tmdebug.log /size:10000000 /entries:0-300':}
+# }
 
   if !$logging {
     exec {'c:/Windows/System32/w32tm.exe /debug /disable':}

@@ -107,3 +107,9 @@ windowstime::servers:
   pool.ntp.org: "0x01"
   time.windows.com: "0x01"
   time.nist.gov: "0x02"
+
+windowstime::debugpath: 'C:\Windows\temp\w32tmdebug.log'
+windowstime::debugsize: 10000000
+windowstime::debugentryfirst: 0
+windowstime::debugentrylast: 300
+windowstime::logging: false
