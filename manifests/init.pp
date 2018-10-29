@@ -27,6 +27,8 @@
 #      servers => { 'pool.ntp.org'     => '0x01',
 #                   'time.windows.com' => '0x01',
 #                 }
+#      logging => 'true',
+#      timezone => 'UTC',
 #    }
 #
 # Authors
@@ -43,7 +45,12 @@ class windowstime (
   Optional[Hash] $servers,
   Optional[String] $timezone = undef,
   Optional[Array] $timezones,
+  Optional[String] $logging,
 ) {
+
+  if $logging {
+    exec {'c:/Windows/System32/w32tm.exe /debug /enable /file:C:\Windows\temp\w32tmdebug.log /size:10000000 /entries:0-300':}
+  }	
 
   $regvalue = maptoreg($servers)
   registry_value { 'HKLM\SYSTEM\CurrentControlSet\Services\W32Time\Parameters\Type':
