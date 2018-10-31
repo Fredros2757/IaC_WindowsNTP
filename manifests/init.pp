@@ -38,7 +38,7 @@
 #      logging => true,
 #    }
 #
-# Enable debugging with custom values  
+# Enable debugging with custom path, max filesize and levels of entries
 #    class { 'windowstime':
 #      servers => { 'pool.ntp.org'     => '0x01',
 #                   'time.windows.com' => '0x01',
@@ -70,6 +70,13 @@ class windowstime (
   Optional[Integer] $debugentryfirst,
   Optional[Integer] $debugentrylast,
   Optional[String]  $timeculture,
+  Optional[Integer] $max_pos_phase_correction,
+  Optional[Integer] $max_neg_phase_correction,
+  Optional[Integer] $special_poll_interval,
+  Optional[Integer] $max_poll_interval,
+  Optional[Integer] $min_poll_interval,
+  Optional[Integer] $large_phase_offset,
+  Optional[Integer] $update_interval,
 ) {
 
   if $logging {
@@ -106,6 +113,55 @@ class windowstime (
     ensure => present,
     type   => string,
     data   => $regvalue,
+    notify => Service['w32time'],
+  }
+
+  registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\MaxPosPhaseCorrection':
+    ensure => present,
+    type   => 'dword',
+    data   => $max_pos_phase_correction,
+    notify => Service['w32time'],
+  }
+
+  registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\MaxNegPhaseCorrection':
+    ensure => present,
+    type   => 'dword',
+    data   => $max_neg_phase_correction,
+    notify => Service['w32time'],
+  }
+
+  registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\TimeProviders\\NtpClient\\SpecialPollInterval':
+    ensure => present,
+    type   => 'dword',
+    data   => $special_poll_interval,
+    notify => Service['w32time'],
+  }
+
+    registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\MaxPollInterval':
+    ensure => present,
+    type   => 'dword',
+    data   => $special_poll_interval,
+    notify => Service['w32time'],
+  }
+
+  registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\MinPollInterval':
+    ensure => present,
+    type   => 'dword',
+    data   => $special_poll_interval,
+    notify => Service['w32time'],
+  }
+
+   registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\LargePhaseOffset':
+    ensure => present,
+    type   => 'dword',
+    data   => $large_phase_offset,
+    notify => Service['w32time'],
+  }
+
+   registry_value { 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Config\\UpdateInterval':
+    ensure => present,
+    type   => 'dword',
+    data   => $update_interval,
     notify => Service['w32time'],
   }
 

@@ -110,10 +110,16 @@ windowstime::servers:
   time.nist.gov: "0x02"
 
 windowstime::timezone: 'UTC'
-
 windowstime::debugpath: 'C:\Windows\temp\w32tmdebug.log'
 windowstime::debugsize: 10000000
 windowstime::debugentryfirst: 0
 windowstime::debugentrylast: 300
 windowstime::logging: false
 windowstime::timeculture: 'eu-UK'
+windowstime::max_pos_phase_correction: 54000
+windowstime::max_neg_phase_correction: 54000
+windowstime::special_poll_interval: 3600
+windowstime::max_poll_interval: 15
+windowstime::min_poll_interval: 10
+windowstime::large_phase_offset: 50000000 
+windowstime::update_interval: 3000
