@@ -26,6 +26,7 @@ windowstime::timezones:
   - Central Standard Time
   - Central Standard Time (Mexico)
   - China Standard Time
+  - Coordinated Universal Time
   - Dateline Standard Time
   - E. Africa Standard Time
   - E. Australia Standard Time
@@ -108,8 +109,11 @@ windowstime::servers:
   time.windows.com: "0x01"
   time.nist.gov: "0x02"
 
+windowstime::timezone: 'UTC'
+
 windowstime::debugpath: 'C:\Windows\temp\w32tmdebug.log'
 windowstime::debugsize: 10000000
 windowstime::debugentryfirst: 0
 windowstime::debugentrylast: 300
 windowstime::logging: false
+windowstime::timeculture: 'eu-UK'

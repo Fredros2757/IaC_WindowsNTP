@@ -69,18 +69,30 @@ class windowstime (
   Optional[Integer] $debugsize,
   Optional[Integer] $debugentryfirst,
   Optional[Integer] $debugentrylast,
+  Optional[String]  $timeculture,
 ) {
 
   if $logging {
-    exec {"c:/Windows/System32/w32tm.exe /debug /enable /file:${debugpath} /size:${debugsize} /entries:${debugentryfirst}-${debugentrylast}":}
+    exec {'Enabling debug log':
+      command  => "w32tm /debug /enable /file:${debugpath} /size:${debugsize} /entries:${debugentryfirst}-${debugentrylast}",
+      provider => powershell,
+      path     => 'c:/windows/system32',
+    }
   }
 
-# if $logging {
-#   exec {'c:/Windows/System32/w32tm.exe /debug /enable /file:C:\Windows\temp\w32tmdebug.log /size:10000000 /entries:0-300':}
-# }
-
   if !$logging {
-    exec {'c:/Windows/System32/w32tm.exe /debug /disable':}
+    exec {'Disabling debug log':
+      command  => 'w32tm /debug /disable',
+      provider => powershell,
+      path     => 'c:/windows/system32',
+    }
+  }
+
+  exec {'Time culture':
+    command  => "Set-Culture ${timeculture}",
+    provider => powershell,
+    path     => 'c:/windows/system32',
+    #onlyif   => "(Get-Culture | %$_.Name;}) -ne ${timeculture}", would have worked but powershell is bugged
   }
 
   $regvalue = maptoreg($servers)
@@ -111,7 +123,12 @@ class windowstime (
     validate_re($timezone, $timezones, 'The specified string is not a valid Timezone')
     if $timezone != $facts['timezone'] {
       $system32dir = $facts['os']['windows']['system32']
-      exec { "${system32dir}\\tzutil.exe /s ${timezone}": }
+      exec { 'Sets specified timezone':
+        command   => "tzutil /s ${timezone}",
+        provider  => powershell,
+        path      => system32dir,
+        logoutput => true,
+      }
     }
   }
 }
