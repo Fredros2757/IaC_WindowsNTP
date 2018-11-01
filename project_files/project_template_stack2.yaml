@@ -85,7 +85,7 @@ resources:
   server1:
     type: OS::Nova::Server
     properties:
-      name: manager
+      name: puppet6_manager
       image: { get_param: image_Linux }
       flavor: { get_param: flavor_medium }
       key_name: { get_param: key_name }
@@ -109,7 +109,7 @@ resources:
   server2:
     type: OS::Nova::Server
     properties:
-      name: Win10
+      name: puppet6_Win10
       image: { get_param: image_Windows10 }
       flavor: { get_param: flavor_medium }
       key_name: { get_param: key_name }
@@ -133,7 +133,7 @@ resources:
   server3:
     type: OS::Nova::Server
     properties:
-      name: Win12
+      name: puppet6_Win12
       image: { get_param: image_Windows12 }
       flavor: { get_param: flavor_large }
       key_name: { get_param: key_name }
@@ -157,7 +157,7 @@ resources:
   server4:
     type: OS::Nova::Server
     properties:
-      name: Win16
+      name: puppet_6Win16
       image: { get_param: image_Windows16 }
       flavor: { get_param: flavor_medium }
       key_name: { get_param: key_name }
@@ -181,7 +181,7 @@ resources:
   server5:
     type: OS::Nova::Server
     properties:
-      name: Win19
+      name: puppet6_Win19
       image: { get_param: image_Windows19 }
       flavor: { get_param: flavor_medium }
       key_name: { get_param: key_name }
@@ -201,6 +201,16 @@ resources:
     properties:
       floating_network: { get_param: public_net }
       port_id: { get_resource: server5_port }
+
+  server6:
+    type: OS::Nova::Server
+    properties:
+      name: helper
+      image: { get_param: image_Linux }
+      flavor: { get_param: flavor_small }
+      key_name: { get_param: key_name }
+      networks:
+        - port: { get_resource: server6_port }
 
   server_security_group_linux:
     type: OS::Neutron::SecurityGroup
