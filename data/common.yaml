@@ -123,3 +123,7 @@ windowstime::max_poll_interval: 15
 windowstime::min_poll_interval: 10
 windowstime::large_phase_offset: 50000000 
 windowstime::update_interval: 3000
+windowstime::service_ensure: running
+windowstime::service_enable: true
+windowstime::service_notify: ['c:/windows/system32/w32tm /resync']
+windowstime::service_provider: powershell
