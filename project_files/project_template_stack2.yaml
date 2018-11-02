@@ -206,7 +206,7 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Add security group rules for Linux servers
-      name: Linux_Secgroup
+      name: Linux_Secgroup_puppet6
       rules:
         - remote_ip_prefix: 0.0.0.0/0
           protocol: tcp
@@ -219,7 +219,7 @@ resources:
     type: OS::Neutron::SecurityGroup
     properties:
       description: Add security group rules for Windows servers
-      name: Win_Secgroup
+      name: Win_Secgroup_puppet6
       rules:
         - remote_ip_prefix: 0.0.0.0/0
           protocol: tcp

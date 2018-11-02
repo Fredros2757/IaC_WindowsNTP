@@ -27,14 +27,17 @@
       "operatingsystem": "Windows",
       "operatingsystemrelease": [
         "Server 2012",
-        "Server 2012 R2"
+        "Server 2012 R2",
+	"Server 2016",
+	"Server 2019",
+	"10"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.5.0 <= 5.5.6"
+      "version_requirement": ">= 4.5.0 < 7.0.0"
     }
   ],
   "description": "A module to manage time configuration in Windows",
