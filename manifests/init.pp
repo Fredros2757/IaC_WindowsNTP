@@ -61,10 +61,10 @@
 # Copyright 2016 Your name here, unless otherwise noted.
 #
 class windowstime (
-  Optional[Hash] $servers,
+  Optional[Hash]    $servers,
   Optional[String]  $timezone = undef,
   Optional[Array]   $timezones,
-  Optional[Boolean] $logging = undef,
+  Optional[Boolean] $logging,
   Optional[String]  $debugpath,
   Optional[Integer] $debugsize,
   Optional[Integer] $debugentryfirst,
@@ -77,10 +77,12 @@ class windowstime (
   Optional[Integer] $min_poll_interval,
   Optional[Integer] $large_phase_offset,
   Optional[Integer] $update_interval,
+  String            $service_ensure,
+  Boolean           $service_enable,
+  String            $service_notify,
+  String            $service_provider,
 ) {
-
   contain windowstime::config
   contain windowstime::service
-
   Class['::windowstime::config'] -> Class['::windowstime::service']
 }
