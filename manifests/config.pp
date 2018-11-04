@@ -5,8 +5,7 @@ class windowstime::config {
 
   if $windowstime::logging {
     exec {'Enabling debug log':
-      command  => "w32tm /debug /enable /file:${windowstime::debugpath}\
-      /size:${windowstime::debugsize} /entries:${windowstime::debugentryfirst}-${windowstime::debugentrylast}",
+      command  => "w32tm /debug /enable /file:${windowstime::debugpath} /size:${windowstime::debugsize} /entries:${windowstime::debugentryfirst}-${windowstime::debugentrylast}",
       provider => powershell,
       path     => 'c:/windows/system32',
     }
@@ -20,7 +19,7 @@ class windowstime::config {
     }
   }
 
-  exec {'Time culture':
+  exec {'Set time culture':
     command  => "Set-Culture ${windowstime::timeculture}",
     provider => powershell,
     path     => 'c:/windows/system32',
@@ -91,11 +90,10 @@ class windowstime::config {
   if $windowstime::timezone {
     validate_re($windowstime::timezone, $windowstime::timezones, 'The specified string is not a valid Timezone')
     if $windowstime::timezone != $facts['timezone'] {
-      $system32dir = $facts['os']['windows']['system32']
-      exec { 'Sets specified timezone':
+      exec { 'Set timezone':
         command   => "tzutil /s ${windowstime::timezone}",
         provider  => powershell,
-        path      => system32dir,
+        path      => 'c:/windows/system32',
         logoutput => true,
       }
     }
