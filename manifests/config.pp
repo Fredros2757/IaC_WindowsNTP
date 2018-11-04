@@ -81,7 +81,10 @@ class windowstime::config {
     data   => $windowstime::update_interval,
   }
 
-  exec { 'c:/Windows/System32/w32tm.exe /resync':
+  exec { 'resync':
+    command     => 'w32tm /resync',
+    provider    => powershell,
+    path        => 'c:/windows/system32',
     refreshonly => true,
   }
 

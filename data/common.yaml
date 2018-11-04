@@ -113,17 +113,16 @@ windowstime::debugentryfirst: 0
 windowstime::debugentrylast: 300
 windowstime::debugpath: 'C:\Windows\temp\w32tmdebug.log'
 windowstime::debugsize: 10000000
-windowstime::large_phase_offset: ~
+windowstime::large_phase_offset: 50000000
 windowstime::logging: false
-windowstime::max_neg_phase_correction: ~
-windowstime::max_poll_interval: ~
-windowstime::max_pos_phase_correction: ~
-windowstime::min_poll_interval: ~
+windowstime::max_neg_phase_correction: 54000
+windowstime::max_poll_interval: 15
+windowstime::max_pos_phase_correction: 54000
+windowstime::min_poll_interval: 10
 windowstime::service_enable: true
 windowstime::service_ensure: running
-windowstime::service_notify: ['c:/windows/system32/w32tm /resync']
 windowstime::service_provider: powershell
-windowstime::special_poll_interval: ~
+windowstime::special_poll_interval: 3600
 windowstime::timeculture: ~
 windowstime::timezone: 'UTC'
-windowstime::update_interval: ~
+windowstime::update_interval: 30000

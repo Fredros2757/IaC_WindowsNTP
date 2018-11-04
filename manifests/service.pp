@@ -5,7 +5,5 @@ class windowstime::service {
   service { 'w32time':
     ensure   => $windowstime::service_ensure,
     enable   => $windowstime::service_enable,
-    notify   => $windowstime::service_notify,
-    provider => $windowstime::service_provider,
   }
 }
