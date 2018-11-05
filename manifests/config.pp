@@ -80,18 +80,11 @@ class windowstime::config {
     data   => $windowstime::update_interval,
   }
 
-  exec { 'resync':
-    command     => 'w32tm /resync',
-    provider    => powershell,
-    path        => 'c:/windows/system32',
-    refreshonly => true,
-  }
-
   if $windowstime::timezone {
     validate_re($windowstime::timezone, $windowstime::timezones, 'The specified string is not a valid Timezone')
     if $windowstime::timezone != $facts['timezone'] {
       exec { 'Set timezone':
-        command   => "tzutil /s ${windowstime::timezone}",
+        command   => "tzutil /s '${windowstime::timezone}'",
         provider  => powershell,
         path      => 'c:/windows/system32',
         logoutput => true,

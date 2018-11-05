@@ -8,6 +8,7 @@ describe 'windowstime' do
       context 'With default parameters' do
         it { is_expected.to contain_class('windowstime::config') }
         it { is_expected.to contain_class('windowstime::service') }
+        it { is_expected.to contain_class('windowstime::notify') }
       end
       context 'contain service w32tm' do
         it {
@@ -22,7 +23,7 @@ describe 'windowstime' do
 
         it {
           is_expected.to contain_exec('Set timezone').with(
-            'command' => 'tzutil /s UTC',
+            'command' => "tzutil /s 'UTC'",
             'provider' => 'powershell',
             'path' => 'c:/windows/system32',
             'logoutput' => true,

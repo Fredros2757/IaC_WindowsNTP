@@ -3,7 +3,7 @@
 #
 class windowstime::service {
   service { 'w32time':
-    ensure   => $windowstime::service_ensure,
-    enable   => $windowstime::service_enable,
+    ensure => $windowstime::service_ensure,
+    enable => $windowstime::service_enable,
   }
 }

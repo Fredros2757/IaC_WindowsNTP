@@ -61,27 +61,31 @@
 # Copyright 2016 Your name here, unless otherwise noted.
 #
 class windowstime (
-  Integer           $debugentryfirst,
-  Integer           $debugentrylast,
-  String            $debugpath,
-  Integer           $debugsize,
-  Boolean           $logging,
-  Hash              $servers,
-  Boolean           $service_enable,
+  Integer                    $debugentryfirst,
+  Integer                    $debugentrylast,
+  String                     $debugpath,
+  Integer                    $debugsize,
+  Boolean                    $logging,
+  Hash                       $servers,
+  Boolean                    $service_enable,
   Enum['running', 'stopped'] $service_ensure,
-  String            $service_provider,
-  String            $timezone,
-  Array             $timezones,
-  Optional[Integer] $large_phase_offset,
-  Optional[Integer] $max_neg_phase_correction,
-  Optional[Integer] $max_poll_interval,
-  Optional[Integer] $max_pos_phase_correction,
-  Optional[Integer] $min_poll_interval,
-  Optional[Integer] $special_poll_interval,
-  Optional[String]  $timeculture,
-  Optional[Integer] $update_interval,
+  String                     $service_provider,
+  String                     $timezone,
+  Array                      $timezones,
+  Optional[Integer]          $large_phase_offset,
+  Optional[Integer]          $max_neg_phase_correction,
+  Optional[Integer]          $max_poll_interval,
+  Optional[Integer]          $max_pos_phase_correction,
+  Optional[Integer]          $min_poll_interval,
+  Optional[Integer]          $special_poll_interval,
+  Optional[String]           $timeculture,
+  Optional[Integer]          $update_interval,
 ) {
   contain windowstime::config
   contain windowstime::service
-  Class['::windowstime::config'] -> Class['::windowstime::service']
+  contain windowstime::notify
+
+  Class['::windowstime::config']
+  -> Class['::windowstime::service']
+  -> Class['::windowstime::notify']
 }
