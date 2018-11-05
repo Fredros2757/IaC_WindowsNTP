@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'windowstime' do
-  on_supported_os(facterversion: '2.4').each do |os, os_facts|
+  on_supported_os.each do |os, _os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts }
+      let(:facts) { { 'osfamily' => 'windows', 'operatingsystemrelease' => "Server #{os}", 'operatingsystem' => 'windows' } }
 
       context 'With default parameters' do
         it { is_expected.to contain_class('windowstime::config') }
