@@ -1,10 +1,8 @@
 heat_template_version: 2013-05-23
 
 description: >
-  HOT template to create a new neutron network plus a router to the public
-  network, and for deploying two servers into the new network. The template also
-  assigns floating IP addresses to each server so they are routable from the
-  public network.
+  Template for en stack med 1 Ubuntu 18.04 instanse og 4 Windows instanser (Win10, Server2012, Server2016, Server2019).
+  Stacken settes opp i et nettverk med ruter, hver instans får floating ip, og security group opprettes og tildeles.
 
 parameters:
   key_name:
